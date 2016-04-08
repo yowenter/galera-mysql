@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
-MAINTAINER Erkan Yanar <erkan.yanar@linsenraum.de>
+FROM daocloud.io/ubuntu:14.04
+MAINTAINER Taoge <wenter.wu@daocloud.io>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
