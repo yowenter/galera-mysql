@@ -1,0 +1,35 @@
+haproxy:
+  image:daocloud.io/haproxy:1.4
+  restart: always
+  ports:
+  - 3307:3307
+  - 8080:8080
+  link:
+  - node1:node1
+  - node2:node2
+  - node3:node3
+  volumes:
+  - /root/haproxy-cfg/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+
+node1:
+  container_name:node1
+  image:daocloud.io/airywenter/galera-mysql
+  restart: always
+  command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://
+
+node2:
+  container_name:node2
+  image: daocloud.io/airywenter/galera-mysql
+  restart: always
+  link:
+  - node1:node1
+  command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://node1
+
+node2:
+  container_name:node3
+  image: daocloud.io/airywenter/galera-mysql
+  restart: always
+  link:
+  - node1:node1
+  command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://node1
+
